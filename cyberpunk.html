@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Altered Carbon — Arasaka Stream Hub</title>
+  <title>The Batman — Arasaka Stream Hub</title>
   <style>
     :root {
       --bg: #020204;
@@ -38,31 +38,34 @@
 <body>
   <div class="page-wrap">
     <header>
-      <h1>Altered Carbon</h1>
+      <h1></h1>
       <a href="index.html">Back to Hub</a>
     </header>
     <main class="detail-card">
       <div class="detail-meta">
-        <span>Show • Cyberpunk</span>
-        <h2>Altered Carbon</h2>
-        <p>In a future where consciousness is stored digitally, one man returns to solve a wealthy client's murder and uncover a deeper conspiracy.</p>
+        <span>Movie • Trending</span>
+        <h2>The Batman</h2>
+        <p>Gotham's newest vigilante prowls the streets in pursuit of corruption, conspiracy, and a shadowy killer.</p>
         <div class="server-buttons">
-          <button class="server-button active" data-server="1" data-media="altered-carbon">Server 1</button>
-          <button class="server-button" data-server="2" data-media="altered-carbon">Server 2</button>
-          <button class="server-button" data-server="3" data-media="altered-carbon">Server 3</button>
+          <button class="server-button active" data-server="1" data-media="the-batman">Server 1</button>
+          <button class="server-button" data-server="2" data-media="the-batman">Server 2</button>
+          <button class="server-button" data-server="3" data-media="the-batman">Server 3</button>
         </div>
       </div>
-      <div class="video-frame">
-        
+      <div class="video-frame"><iframe
+  src="https://vidsrc.to/embed/movie/tt1877830"
+  width="100%"
+  height="600"
+  frameborder="0"
+  allowfullscreen>
+</iframe>
+/iframe>
       </div>
     </main>
   </div>
     <script>
     const buttons = document.querySelectorAll('.server-button');
     const frame = document.getElementById('videoFrame');
-    function vidKingSrc(media, server) {
-      return `https://www.vidking.net/api/embed?media=${media}&server=${server}`;
-    }
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         buttons.forEach(btn => btn.classList.remove('active'));

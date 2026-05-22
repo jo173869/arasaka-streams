@@ -52,28 +52,20 @@
           <button class="server-button" data-server="3" data-media="the-batman">Server 3</button>
         </div>
       </div>
-      <div class="video-frame">
-       style="background:#000; margin:0; padding:20px;">
-
-  <h1 style="color:white;">The Batman (2022)</h1>
-
-  <iframe 
-    src="https://www.vidking.net/embed/movie/tt1877830"
-    width="100%"
-    height="600"
-    frameborder="0"
-    allowfullscreen>
-  </iframe>
+      <div class="video-frame"><iframe
+  src="https://vidsrc.to/embed/movie/tt1877830"
+  width="100%"
+  height="600"
+  frameborder="0"
+  allowfullscreen>
 </iframe>
+/iframe>
       </div>
     </main>
   </div>
     <script>
     const buttons = document.querySelectorAll('.server-button');
     const frame = document.getElementById('videoFrame');
-    function vidKingSrc(media, server) {
-      return `https://www.vidking.net/api/embed?media=${media}&server=${server}`;
-    }
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         buttons.forEach(btn => btn.classList.remove('active'));

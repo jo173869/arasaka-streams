@@ -58,7 +58,13 @@
         </div>
       </div>
       <div class="video-frame">
-        <iframe id="videoFrame" src="https://www.vidking.net/api/embed?media=black-mirror&server=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <iframe
+          src="https://vidsrc.to/embed/tv/tt2085059"
+          width="100%"
+          height="600"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
       </div>
     </main>
   </div>
@@ -75,6 +81,34 @@
         const mediaId = button.dataset.media;
         const serverId = button.dataset.server;
         frame.src = vidKingSrc(mediaId, serverId);
+     <select id="episodeSelect" onchange="changeEpisode()">
+  <option value="1-1">Season 1, Episode 1</option>
+  <option value="1-2">Season 1, Episode 2</option>
+  <option value="1-3">Season 1, Episode 3</option>
+
+  <option value="2-1">Season 2, Episode 1</option>
+  <option value="2-2">Season 2, Episode 2</option>
+  <option value="2-3">Season 2, Episode 3</option>
+
+  <option value="3-1">Season 3, Episode 1</option>
+  <option value="3-2">Season 3, Episode 2</option>
+  <option value="3-3">Season 3, Episode 3</option>
+  <option value="3-4">Season 3, Episode 4</option>
+  <option value="3-5">Season 3, Episode 5</option>
+  <option value="3-6">Season 3, Episode 6</option>
+
+  <option value="4-1">Season 4, Episode 1</option>
+  <option value="4-2">Season 4, Episode 2</option>
+  <option value="4-3">Season 4, Episode 3</option>
+  <option value="4-4">Season 4, Episode 4</option>
+  <option value="4-5">Season 4, Episode 5</option>
+  <option value="4-6">Season 4, Episode 6</option>
+
+  <option value="5-1">Season 5, Episode 1</option>
+  <option value="5-2">Season 5, Episode 2</option>
+  <option value="5-3">Season 5, Episode 3</option>
+</select>
+
       });
     });
   </script>

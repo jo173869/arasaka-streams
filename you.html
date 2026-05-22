@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Altered Carbon — Arasaka Stream Hub</title>
+  <title>You — Arasaka Stream Hub</title>
   <style>
     :root {
       --bg: #020204;
@@ -15,7 +15,12 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; background: linear-gradient(180deg, #020204 0%, #040406 100%); color: var(--text); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #020204 0%, #040406 100%);
+      color: var(--text);
+    }
     .page-wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
     header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
     header h1 { margin: 0; font-size: 1.6rem; letter-spacing: 0.12em; text-transform: uppercase; }
@@ -38,22 +43,28 @@
 <body>
   <div class="page-wrap">
     <header>
-      <h1>Altered Carbon</h1>
+      <h1>You</h1>
       <a href="index.html">Back to Hub</a>
     </header>
     <main class="detail-card">
       <div class="detail-meta">
-        <span>Show • Cyberpunk</span>
-        <h2>Altered Carbon</h2>
-        <p>In a future where consciousness is stored digitally, one man returns to solve a wealthy client's murder and uncover a deeper conspiracy.</p>
+        <span>Show • Anthology</span>
+        <h2>You</h2>
+        <p>A charming and intense young man inserts himself into the lives of women who fascinate him.</p>
         <div class="server-buttons">
-          <button class="server-button active" data-server="1" data-media="altered-carbon">Server 1</button>
-          <button class="server-button" data-server="2" data-media="altered-carbon">Server 2</button>
-          <button class="server-button" data-server="3" data-media="altered-carbon">Server 3</button>
+          <button class="server-button active" data-server="1" data-media="black-mirror">Server 1</button>
+          <button class="server-button" data-server="2" data-media="black-mirror">Server 2</button>
+          <button class="server-button" data-server="3" data-media="black-mirror">Server 3</button>
         </div>
       </div>
       <div class="video-frame">
-        
+        <iframe
+          src="https://vidsrc.to/embed/tv/tt7335184"
+          width="100%"
+          height="600"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
       </div>
     </main>
   </div>
@@ -70,6 +81,9 @@
         const mediaId = button.dataset.media;
         const serverId = button.dataset.server;
         frame.src = vidKingSrc(mediaId, serverId);
+     <select id="episodeSelect" onchange="changeEpisode()">
+</select>
+
       });
     });
   </script>
