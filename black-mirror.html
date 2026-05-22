@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Black Mirror — Arasaka Stream Hub</title>
+  <style>
+    :root {
+      --bg: #020204;
+      --accent: #ff0018;
+      --text: #f7f7f9;
+      --muted: #9a9db4;
+      --surface: rgba(10, 0, 0, 0.92);
+      --border: rgba(255, 0, 24, 0.35);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #020204 0%, #040406 100%);
+      color: var(--text);
+    }
+    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    header h1 { margin: 0; font-size: 1.6rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    header a { color: var(--muted); text-decoration: none; border: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; border-radius: 999px; transition: background 0.2s ease, color 0.2s ease; }
+    header a:hover { background: rgba(255,0,24,0.12); color: #fff; border-color: var(--accent); }
+    .detail-card { background: rgba(10, 0, 0, 0.9); border: 1px solid var(--border); border-radius: 26px; box-shadow: 0 0 50px rgba(255, 0, 24, 0.15); overflow: hidden; display: grid; gap: 24px; padding: 32px; margin-top: 24px; }
+    .detail-meta { display: grid; gap: 18px; }
+    .detail-meta span { display: inline-block; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.85rem; }
+    .detail-meta h2 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
+    .detail-meta p { margin: 0; max-width: 780px; line-height: 1.75; color: var(--muted); }
+    .server-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+    .server-button { border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(255,255,255,0.04); color: var(--text); padding: 14px 20px; border-radius: 999px; cursor: pointer; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease; }
+    .server-button:hover { transform: translateY(-1px); }
+    .server-button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .video-frame { border-radius: 22px; overflow: hidden; border: 1px solid rgba(255, 0, 24, 0.2); box-shadow: 0 0 40px rgba(255, 0, 24, 0.12); margin-top: 16px; }
+    .video-frame iframe { width: 100%; height: 560px; min-height: 320px; }
+    @media (max-width: 760px) { .video-frame iframe { height: 260px; } }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <header>
+      <h1>Black Mirror</h1>
+      <a href="index.html">Back to Hub</a>
+    </header>
+    <main class="detail-card">
+      <div class="detail-meta">
+        <span>Show • Anthology</span>
+        <h2>Black Mirror</h2>
+        <p>Twisted tech tales explore dark corners of the digital future, where each episode is a self-contained cautionary story.</p>
+        <div class="server-buttons">
+          <button class="server-button active" data-server="1" data-media="black-mirror">Server 1</button>
+          <button class="server-button" data-server="2" data-media="black-mirror">Server 2</button>
+          <button class="server-button" data-server="3" data-media="black-mirror">Server 3</button>
+        </div>
+      </div>
+      <div class="video-frame">
+        <iframe id="videoFrame" src="https://www.vidking.net/api/embed?media=black-mirror&server=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </main>
+  </div>
+    <script>
+    const buttons = document.querySelectorAll('.server-button');
+    const frame = document.getElementById('videoFrame');
+    function vidKingSrc(media, server) {
+      return `https://www.vidking.net/api/embed?media=${media}&server=${server}`;
+    }
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const mediaId = button.dataset.media;
+        const serverId = button.dataset.server;
+        frame.src = vidKingSrc(mediaId, serverId);
+      });
+    });
+  </script>
+</body>
+</html>

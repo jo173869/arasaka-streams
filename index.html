@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arasaka Stream Hub</title>
+  <style>
+    :root {
+      --bg: #020204;
+      --surface: rgba(16, 0, 0, 0.92);
+      --accent: #ff0018;
+      --accent-soft: rgba(255, 0, 24, 0.24);
+      --text: #f7f7f9;
+      --muted: #9a9db4;
+      --border: rgba(255, 0, 24, 0.35);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, rgba(255, 0, 24, 0.18), transparent 18%),
+                  linear-gradient(180deg, #020204 0%, #040406 100%);
+      color: var(--text);
+      text-shadow: 0 0 8px rgba(255, 0, 24, 0.18);
+    }
+
+    .page-wrap {
+      min-height: 100vh;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid transparent;
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(212, 0, 22, 0.08);
+    }
+
+    .hero {
+      background: rgba(6, 0, 0, 0.88);
+      border: 1px solid rgba(255, 0, 24, 0.55);
+      box-shadow: 0 0 40px rgba(255, 0, 24, 0.18);
+      border-radius: 22px;
+      padding: 36px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .hero-content {
+      max-width: 720px;
+    }
+
+    .hero h2 {
+      margin: 0 0 16px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.05;
+      color: #fff;
+      text-shadow: 0 0 18px rgba(255, 0, 24, 0.55);
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .button.secondary {
+      background: rgba(255, 0, 24, 0.12);
+      border-color: rgba(255, 0, 24, 0.35);
+      color: var(--text);
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      background: #ff1f2b;
+      box-shadow: 0 0 20px rgba(255, 0, 24, 0.45);
+    }
+
+    .search-card {
+      position: relative;
+      background: rgba(255, 0, 24, 0.06);
+      border: 1px solid rgba(255, 0, 24, 0.22);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 0 30px rgba(255, 0, 24, 0.12);
+    }
+
+    .search-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .categories, .featured {
+      display: grid;
+      gap: 18px;
+    }
+
+    .category-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 20px;
+      min-height: 180px;
+    }
+
+    .card h4 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .watchlist-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 0, 24, 0.18);
+      border-radius: 18px;
+      padding: 22px;
+      min-height: 220px;
+    }
+
+    .watchlist-list {
+      list-style: none;
+      margin: 18px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .watchlist-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 0, 24, 0.16);
+      background: rgba(255, 0, 24, 0.06);
+    }
+
+    .watchlist-item strong {
+      font-size: 0.95rem;
+    }
+
+    .watchlist-item small {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .progress-shell {
+      width: 160px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255, 0, 24, 1), rgba(255, 0, 24, 0.6));
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .grid-list {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .media-card {
+      overflow: hidden;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 0, 24, 0.04), rgba(8, 0, 0, 0.96));
+      border: 1px solid rgba(255, 0, 24, 0.18);
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px;
+      box-shadow: 0 0 28px rgba(255, 0, 24, 0.08);
+    }
+
+    .thumb {
+      height: 170px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .thumb::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+    }
+
+    .thumb span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .thumb.inception {
+      background: radial-gradient(circle at 20% 20%, rgba(255, 0, 24, 0.45), transparent 30%),
+                  linear-gradient(135deg, #070507, #12050c 90%);
+    }
+
+    .thumb.matrix {
+      background: linear-gradient(135deg, #020906 0%, #050a07 40%, #020406 100%);
+    }
+
+    .thumb.blade {
+      background: radial-gradient(circle at 35% 30%, rgba(255, 0, 24, 0.25), transparent 30%),
+                  linear-gradient(180deg, #020205 0%, #06020b 100%);
+    }
+
+    .thumb.stranger {
+      background: linear-gradient(135deg, #06020f 0%, #120015 100%);
+    }
+
+    .thumb.blackmirror {
+      background: radial-gradient(circle at 50% 50%, rgba(255, 0, 24, 0.2), transparent 25%),
+                  linear-gradient(180deg, #040308 0%, #040104 100%);
+    }
+
+    .thumb.altered {
+      background: linear-gradient(135deg, #050007 0%, #1a020f 100%);
+    }
+
+    .terminal-card {
+      background: rgba(0, 0, 0, 0.88);
+      border: 1px solid rgba(255, 0, 24, 0.35);
+      border-radius: 22px;
+      padding: 26px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #f5f5f5;
+      box-shadow: 0 0 40px rgba(255, 0, 24, 0.12);
+    }
+
+    .terminal-card .status-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      color: #ff7373;
+      font-size: 0.95rem;
+    }
+
+    .terminal-card pre {
+      margin: 0;
+      color: #c6c6ff;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .video-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 20px;
+    }
+
+    .video-modal.active {
+      display: flex;
+    }
+
+    .video-modal__content {
+      width: min(1100px, 100%);
+      max-width: 1100px;
+      background: rgba(10, 0, 0, 0.96);
+      border: 1px solid rgba(255, 0, 24, 0.35);
+      border-radius: 22px;
+      position: relative;
+      box-shadow: 0 0 70px rgba(255, 0, 24, 0.3);
+      overflow: hidden;
+    }
+
+    .video-modal__close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 0, 24, 0.18);
+      color: #fff;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .video-modal__frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .video-modal__frame iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+    .media-card span {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .media-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 20px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @media (min-width: 900px) {
+      .hero {
+        grid-template-columns: 1.3fr 0.9fr;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <header>
+      <div class="brand">
+        <h1>Arasaka Stream Hub</h1>
+        <p>Free movies and TV shows for when subscription prices are too high.</p>
+      </div>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#browse">Browse</a>
+        <a href="#tv">TV Shows</a>
+        <a href="#movies">Movies</a>
+        <a href="#community">Community</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Plug in. Play anything. Stay covert.</h2>
+        <p>Arasaka Stream Hub is built for people who need a safe place to watch movies and shows without paying for every service. Discover curated picks, hidden gems, and free entertainment in an urban neon world.</p>
+        <div class="actions">
+          <a class="button" href="#browse">Start Watching</a>
+          <a class="button secondary" href="#community">Join the Crew</a>
+        </div>
+      </div>
+
+      <div class="terminal-card">
+        <div class="status-line"><span>[NODE: ARASAKA-HUB]</span> <span>Secure Stream Relay</span></div>
+        <pre>INIT: STANDBY MODE
+SCAN: 304 STREAM SOURCES
+ACCESS: FREE MOVIES + TV SHOWS
+SECURE: 256-BIT REDLINE ENCRYPTION
+LAUNCH: CLICK A THUMBNAIL FOR TRAILER PREVIEW
+</pre>
+      </div>
+    </section>
+
+    <section class="categories" id="browse">
+      <div class="card">
+        <h4>Mission</h4>
+        <p>Provide access to free entertainment, highlight community-sourced quality streams, and keep the interface clean, fast, and easy to use.</p>
+      </div>
+      <div class="card">
+        <h4>Features</h4>
+        <p>Watch top movies for free, explore serialized TV shows, search by genre, and browse new additions without the usual paywall.</p>
+      </div>
+      <div class="card">
+        <h4>Security</h4>
+        <p>Designed with a slick, low-profile cyberpunk aesthetic and a focus on privacy, so your watchlist stays yours.</p>
+      </div>
+    </section>
+
+    <section class="featured" id="movies">
+      <h3>Featured Movies</h3>
+      <div class="grid-list">
+        <article class="media-card">
+          <a class="thumb inception" href="inception.html" aria-label="Open Inception page"><span>Inception</span></a>
+          <div>
+            <span>Sci-Fi</span>
+            <h5>Inception</h5>
+            <p>Dreams inside dreams collide in Christopher Nolan's mind-bending heist thriller.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/8hP9D6kZseM" aria-label="Watch Inception trailer">Preview Trailer</a>
+        </article>
+        <article class="media-card">
+          <a class="thumb matrix" href="the-matrix.html" aria-label="Open The Matrix page"><span>The Matrix</span></a>
+          <div>
+            <span>Action</span>
+            <h5>The Matrix</h5>
+            <p>A hacker wakes up to a hidden digital world and leads the fight against machine control.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/vKQi3bBA1y8" aria-label="Watch The Matrix trailer">Preview Trailer</a>
+        </article>
+        <article class="media-card">
+          <a class="thumb blade" href="blade-runner-2049.html" aria-label="Open Blade Runner 2049 page"><span>Blade Runner 2049</span></a>
+          <div>
+            <span>Neo-noir</span>
+            <h5>Blade Runner 2049</h5>
+            <p>A blade runner uncovers a buried secret that forces him to question reality and identity.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/gCcx85zbxz4" aria-label="Watch Blade Runner 2049 trailer">Preview Trailer</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="featured" id="tv">
+      <h3>Top TV Shows</h3>
+      <div class="grid-list">
+        <article class="media-card">
+          <a class="thumb stranger" href="stranger-things.html" aria-label="Open Stranger Things page"><span>Stranger Things</span></a>
+          <div>
+            <span>Adventure</span>
+            <h5>Stranger Things</h5>
+            <p>A group of kids in the '80s confront supernatural threats while uncovering a secret government program.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/mnd7sFt5c3A" aria-label="Watch Stranger Things trailer">Preview Trailer</a>
+        </article>
+        <article class="media-card">
+          <a class="thumb blackmirror" href="black-mirror.html" aria-label="Open Black Mirror page"><span>Black Mirror</span></a>
+          <div>
+            <span>Anthology</span>
+            <h5>Black Mirror</h5>
+            <p>Stand-alone episodes explore twisted futures shaped by technology, power, and choice.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/jDiYGjpN0aM" aria-label="Watch Black Mirror trailer">Preview Trailer</a>
+        </article>
+        <article class="media-card">
+          <a class="thumb altered" href="altered-carbon.html" aria-label="Open Altered Carbon page"><span>Altered Carbon</span></a>
+          <div>
+            <span>Cyberpunk</span>
+            <h5>Altered Carbon</h5>
+            <p>In a future where bodies are interchangeable, a rebel investigator uncovers a deadly conspiracy.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/k0XFMr8knqQ" aria-label="Watch Altered Carbon trailer">Preview Trailer</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="featured" id="top-today">
+      <h3>#1 Movies Today</h3>
+      <div class="grid-list">
+        <article class="media-card">
+          <a class="thumb matrix" href="the-batman.html" aria-label="Open The Batman page"><span>The Batman</span></a>
+          <div>
+            <span>Trending</span>
+            <h5>The Batman</h5>
+            <p>Gotham's newest vigilante hunts corruption through a noir-inspired mystery that has viewers hooked.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/mqqft2x_Aa4" aria-label="Watch The Batman trailer">Preview Trailer</a>
+        </article>
+        <article class="media-card">
+          <a class="thumb blade" href="dune.html" aria-label="Open Dune page"><span>Dune</span></a>
+          <div>
+            <span>Epic</span>
+            <h5>Dune</h5>
+            <p>Paul Atreides fights for survival on a desert world in a blockbuster currently leading today's charts.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/n9xhJrPXop4" aria-label="Watch Dune trailer">Preview Trailer</a>
+        </article>
+        <article class="media-card">
+          <a class="thumb altered" href="top-gun-maverick.html" aria-label="Open Top Gun Maverick page"><span>Top Gun: Maverick</span></a>
+          <div>
+            <span>Action</span>
+            <h5>Top Gun: Maverick</h5>
+            <p>High-flying drama and precision aerial combat make this one of today's top streamed movies.</p>
+          </div>
+          <a class="button secondary trailer-trigger" href="#" data-video="https://www.youtube.com/embed/giXco2jaZ_4" aria-label="Watch Top Gun Maverick trailer">Preview Trailer</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="categories" id="watchlist">
+      <div class="watchlist-card">
+        <h4>Continue Watching</h4>
+        <p>Resume your last previewed trailers or save films for later in your private hub.</p>
+        <ul class="watchlist-list">
+          <li class="watchlist-item">
+            <div>
+              <strong>Inception</strong>
+              <small>40% previewed</small>
+            </div>
+            <div class="progress-shell"><span class="progress-bar" style="width: 40%"></span></div>
+          </li>
+          <li class="watchlist-item">
+            <div>
+              <strong>Black Mirror</strong>
+              <small>60% previewed</small>
+            </div>
+            <div class="progress-shell"><span class="progress-bar" style="width: 60%"></span></div>
+          </li>
+          <li class="watchlist-item">
+            <div>
+              <strong>Altered Carbon</strong>
+              <small>20% previewed</small>
+            </div>
+            <div class="progress-shell"><span class="progress-bar" style="width: 20%"></span></div>
+          </li>
+        </ul>
+      </div>
+      <div class="watchlist-card">
+        <h4>Saved For Later</h4>
+        <p>Queue up highly rated movies and shows you want to watch next time you're online.</p>
+        <ul class="watchlist-list">
+          <li class="watchlist-item">
+            <div>
+              <strong>The Matrix</strong>
+              <small>Ready to preview</small>
+            </div>
+            <div class="progress-shell"><span class="progress-bar" style="width: 0%"></span></div>
+          </li>
+          <li class="watchlist-item">
+            <div>
+              <strong>Blade Runner 2049</strong>
+              <small>Ready to preview</small>
+            </div>
+            <div class="progress-shell"><span class="progress-bar" style="width: 0%"></span></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="categories" id="community">
+      <div class="card">
+        <h4>Community</h4>
+        <p>Share recommendations, add titles to the watchlist, and access free resources for new releases and hidden archives.</p>
+      </div>
+      <div class="card">
+        <h4>Support</h4>
+        <p>Need a fallback stream? Find low-cost alternatives, tips for avoiding paywalls, and curated collections.</p>
+      </div>
+    </section>
+
+    <div class="video-modal" id="videoModal" aria-hidden="true">
+      <div class="video-modal__content">
+        <button class="video-modal__close" id="modalClose" aria-label="Close trailer overlay">×</button>
+        <div class="video-modal__frame">
+          <iframe id="videoFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Arasaka Stream Hub • Free access guide for movie and show lovers. Built for the street-smart audience who deserve entertainment without the monthly drain.</p>
+    </footer>
+  </div>
+  <script>
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoFrame');
+    const closeBtn = document.getElementById('modalClose');
+    const triggers = document.querySelectorAll('.trailer-trigger');
+
+    function openModal(url) {
+      iframe.src = `${url}?autoplay=1&rel=0&showinfo=0`;
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      iframe.src = '';
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        const videoUrl = trigger.getAttribute('data-video');
+        if (videoUrl) openModal(videoUrl);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
